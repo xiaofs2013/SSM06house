@@ -35,4 +35,5 @@ public interface UsersService {
     public Users login(String name, String password);
 
 
+    Users loginTel(String tel);
 }

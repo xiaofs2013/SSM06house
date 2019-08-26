@@ -56,4 +56,23 @@ public class UserCollection {
 
     }
 
+    //实现登入：通过手机验证
+    @RequestMapping("/login2")
+    public String checkUserName(String inputCode, HttpSession session, String tel, Model model) {
+
+        String code = (String) session.getAttribute("code");
+        Users users = usersService.loginTel(tel);
+
+        if (inputCode.equals(code) && users != null) {
+            session.setAttribute("loginInfo", users);
+            session.setMaxInactiveInterval(600);
+            return "redirect:getHouse";  //用户登录后的网页
+
+        } else {
+            model.addAttribute("info", "手机号码不正确！");
+            return "login";
+        }
+    }
+
+
 }

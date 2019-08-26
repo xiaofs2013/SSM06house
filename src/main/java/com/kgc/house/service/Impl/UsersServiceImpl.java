@@ -137,7 +137,22 @@ public class UsersServiceImpl implements UsersService {
         if (list.size() == 0) {
             return null;
         } else {
+            return list.get(0);    //获得list中的第一个元素 应该是ID或者Name
+        }
+    }
+
+    public Users loginTel(String tel) {
+
+        UsersExample e = new UsersExample();
+        UsersExample.Criteria c = e.createCriteria();
+        c.andTelephoneEqualTo(tel);
+        List<Users> list = usersMapper.selectByExample(e);
+        if (list.size() == 0) {
+            return null;
+        } else {
             return list.get(0);
         }
+
+
     }
 }

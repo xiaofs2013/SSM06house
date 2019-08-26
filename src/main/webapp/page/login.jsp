@@ -7,6 +7,49 @@
     <LINK
             rel=stylesheet type=text/css href="../css/style.css">
     <META name=GENERATOR content="MSHTML 8.00.7601.17514">
+    <script language="JavaScript" type="text/javascript" src="../admin/js/jquery-1.8.3.js"></script>
+
+
+    <script language="JavaScript">
+        var timeobj;
+        $(function () {
+            $("#sendButton").click(function () {
+                $.post("sendCode", {"tel": $("#inputTel").val()}, function (data) {
+                    alert(data.result)
+                    if (data.result > 0) {
+                        timeobj = setInterval("goback()", 1000); //设置定时器  1秒触发一次goback方法
+                        alert("发送验证码成功！")
+
+                    } else {
+                        alert("发送失败")
+                    }
+
+                }, "json")
+
+            })
+
+        })
+
+
+        //显示倒计时
+        var time = 60;
+
+        function goback() {
+            time--;
+            if (time == 0) {
+                $("#sendButton").val("重新发送");
+                time = 60;
+                clearInterval(timeobj); //消除定时
+            } else {
+                $("#sendButton").val(time);
+                $("#sendButton").disabled = true;
+            }
+        }
+
+
+    </script>
+
+
 </HEAD>
 <BODY>
 <DIV id=header class=wrap>
@@ -44,6 +87,17 @@
                     </DIV>
                 </DIV>
             </FORM>
+
+
+            <form action="login2" method="post">
+                请输入电话号码： <input type="text" name="tel" id="inputTel">----<input type="button" value="验证"
+                                                                                name="dd" id="sendButton">
+                请输入验证码：<input type="text" name="inputCode">
+                <INPUT value=登陆 type=submit>
+
+            </form>
+
+
         </DIV>
     </DIV>
 </DIV>
@@ -54,4 +108,6 @@
     </DL>
 </DIV>
 </BODY>
+
+
 </HTML>
